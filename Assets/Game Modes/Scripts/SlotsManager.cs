@@ -35,7 +35,7 @@ public class SlotsManager : MonoBehaviour {
     public void GenerateTargets(int numberOfSlots) {
         //clean up old children
         foreach (Transform child in controller.transform) {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
 
         if (numberOfSlots > maxRows * maxCols) {

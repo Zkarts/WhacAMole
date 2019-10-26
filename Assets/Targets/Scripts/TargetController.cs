@@ -11,7 +11,6 @@ public class TargetController : MonoBehaviour {
     private Timer timer;
     private PlayModel playModel;
 
-
     private void Awake() {
         timer = GetComponent<Timer>();
     }
@@ -37,6 +36,8 @@ public class TargetController : MonoBehaviour {
     }
 
     private IEnumerator PresentRoutine() {
+        yield return null;
+        /*
         for (int i = 0; i < presenters.Count; i++) {
             expiredTime = 0;
 
@@ -50,6 +51,7 @@ public class TargetController : MonoBehaviour {
 
             presenters[i].HideTarget();
         }
+        */
     }
 
 

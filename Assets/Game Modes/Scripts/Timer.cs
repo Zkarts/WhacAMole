@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour {
 
     public void StartTimer(float duration, Action onTimerEnd) {
         this.duration = duration;
-        this.onTimerEnd += onTimerEnd;
+        this.onTimerEnd = onTimerEnd;
 
         timerCoroutine = StartCoroutine(TimerRoutine());
     }

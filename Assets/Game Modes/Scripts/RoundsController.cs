@@ -17,14 +17,17 @@ public class RoundsController : MonoBehaviour {
     private int roundCounter = 0;
 
     private void Awake() {
-        Timer timer = GetComponent<Timer>();
+        timer = GetComponent<Timer>();
     }
 
-    public void Init(TargetTypeCollection targetTypeCollection, List<RoundDefinition> roundDefinitions, PlayModel playModel) {
+    public void StartRounds(TargetTypeCollection targetTypeCollection, List<RoundDefinition> roundDefinitions, PlayModel playModel) {
         this.targetTypeCollection = targetTypeCollection;
         this.roundDefinitions = roundDefinitions;
 
         targetController.Init(playModel);
+
+        roundCounter = 0;
+        ExecuteRound();
     }
 
     private void ExecuteRound() {
@@ -33,6 +36,7 @@ public class RoundsController : MonoBehaviour {
     }
 
     private void EvaluateRound() {
+        Debug.Log("Round " + roundCounter + " over");
         if (roundDefinitions[roundCounter].isFinalRound) {
             OnRoundsFinished?.Invoke();
         }

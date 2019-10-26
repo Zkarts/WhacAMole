@@ -14,38 +14,38 @@ public class GameModesController : MonoBehaviour {
     private RoundsController roundsController;
 
     [SerializeField]
+    private MenuUI menuUI;
+
+    [SerializeField]
     private PlayUI playUI;
 
     private PlayModel playModel;
 
     public void Start() {
-        //TODO: Temp
-        StartGame(30, 15);
-
-
-
-        playModel = new PlayModel();
-        playUI.Init(playModel);
+        menuUI.OnPlay += StartGame;
+        menuUI.Activate();
     }
 
-
-
-
-    //TODO do buttons and stuff
     public void StartGame(int gameDurationInSeconds, int slotCount) {
         playModel = new PlayModel();
+        playUI.Subscribe(playModel);
+        playUI.Activate(gameDurationInSeconds);
 
         targetGenerator.GenerateTargets(slotCount);
         List<RoundDefinition> roundDefinitions = roundsGenerator.GenerateRounds(gameDurationInSeconds, slotCount);
-        roundsController.Init(roundsGenerator.TargetTypeCollection, roundDefinitions, playModel);
+        roundsController.StartRounds(roundsGenerator.TargetTypeCollection, roundDefinitions, playModel);
 
         roundsController.OnRoundsFinished += EndGame;
-        playUI.Activate(gameDurationInSeconds);
+
+        menuUI.Deactivate();
     }
 
     //TODO
     private void EndGame() {
+        playUI.Unsubscribe(playModel);
+        playUI.Deactivate();
 
+        menuUI.Activate();
     }
 
 }
