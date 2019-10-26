@@ -60,10 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55a99d832db0ca4b880ea531a815a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shownYPos: 0
-  hiddenYPos: -0.7
-  showMoveTime: 0
-  hideMoveTime: 0
+  moveDistance: 1
+  showMoveTime: 0.3
+  hideMoveTime: 0.3
 --- !u!1 &2134573859619070381
 GameObject:
   m_ObjectHideFlags: 0

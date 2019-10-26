@@ -13,13 +13,6 @@ public class SlotsManager : MonoBehaviour {
     [SerializeField]
     private Transform gameBoard;
 
-    [Header("Hole size")]
-    [SerializeField]
-    private float holeWidth = 1f;
-
-    [SerializeField]
-    private float holeHeight = 1f;
-
     [Header("Slot grid")]
     [SerializeField]
     [Range(1, 3)]

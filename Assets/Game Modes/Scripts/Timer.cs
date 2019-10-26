@@ -14,6 +14,9 @@ public class Timer : MonoBehaviour {
         this.duration = duration;
         this.onTimerEnd = onTimerEnd;
 
+        if (timerCoroutine != null) {
+            StopTimer();
+        }
         timerCoroutine = StartCoroutine(TimerRoutine());
     }
 

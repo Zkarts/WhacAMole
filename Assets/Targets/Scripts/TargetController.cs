@@ -10,6 +10,7 @@ public class TargetController : MonoBehaviour {
 
     private Timer timer;
     private PlayModel playModel;
+    private TargetTypeCollection targetTypeCollection;
 
     private void Awake() {
         timer = GetComponent<Timer>();
@@ -17,56 +18,47 @@ public class TargetController : MonoBehaviour {
 
     public void SetPresenters(List<TargetPresenter> presenters) {
         this.presenters = presenters;
-
-        foreach (TargetPresenter presenter in presenters) {
-            presenter.Init(playModel);
-        }
     }
 
-    public void Init(PlayModel playModel) {
+    public void Init(PlayModel playModel, TargetTypeCollection targetTypeCollection) {
         this.playModel = playModel;
+        this.targetTypeCollection = targetTypeCollection;
     }
-
-
-
-
-    //TODO: temp
-    public void Start() {
-        StartCoroutine(PresentRoutine());
-    }
-
-    private IEnumerator PresentRoutine() {
-        yield return null;
-        /*
-        for (int i = 0; i < presenters.Count; i++) {
-            expiredTime = 0;
-
-            presenters[i].PresentTarget();
-
-            //TODO: get the right round duration here
-            while (expiredTime < 3f) {
-                expiredTime += Time.deltaTime;
-                yield return null;
-            }
-
-            presenters[i].HideTarget();
-        }
-        */
-    }
-
-
 
     public void ExecuteRound(RoundDefinition roundDefinition) {
+        LoadTargets(roundDefinition.orderedSlotDefinitions);
         ShowTargets();
         timer.StartTimer(roundDefinition.duration - TargetMoveBehaviour.maxMoveTime, HideTargets);
     }
 
-    private void ShowTargets() {
+    private void LoadTargets(List<RoundDefinition.SlotDefinition> slotDefinitions) {
+        for (int i = 0; i < presenters.Count; i++) {
+            presenters[i].ClearTarget();
 
+            RoundDefinition.SlotDefinition slotDefinition = slotDefinitions[i];
+            if (slotDefinition == null) {
+                continue;
+            }
+
+            WhackTarget targetPrefab = targetTypeCollection.targetTypes[slotDefinition.targetTypeIndex];
+            WhackTarget newTarget = GameObject.Instantiate<WhackTarget>(targetPrefab, presenters[i].transform);
+            newTarget.transform.eulerAngles = Vector3.zero;
+
+            presenters[i].SetTarget(newTarget);
+            newTarget.Init(presenters[i], playModel);
+        }
+    }
+
+    private void ShowTargets() {
+        for (int i = 0; i < presenters.Count; i++) {
+            presenters[i].PresentTarget();
+        }
     }
 
     private void HideTargets() {
-
+        for (int i = 0; i < presenters.Count; i++) {
+            presenters[i].HideTarget();
+        }
     }
 
 }

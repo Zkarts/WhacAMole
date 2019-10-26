@@ -40,6 +40,7 @@ public class IntValuePicker : MonoBehaviour {
     public void Deactivate() {
         addButton.onClick.RemoveListener(Add);
         subtractButton.onClick.RemoveListener(Subtract);
+
         gameObject.SetActive(false);
     }
 

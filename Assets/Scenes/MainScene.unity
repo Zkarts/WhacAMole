@@ -1464,6 +1464,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1701898366}
     m_Modifications:
+    - target: {fileID: 148413236740330115, guid: 88e1f51d5c3769644aca7889b9d2edc1,
+        type: 3}
+      propertyPath: m_Name
+      value: HolesPicker
+      objectReference: {fileID: 0}
     - target: {fileID: 4476984042495885671, guid: 88e1f51d5c3769644aca7889b9d2edc1,
         type: 3}
       propertyPath: defaultValue
@@ -1478,11 +1483,6 @@ PrefabInstance:
         type: 3}
       propertyPath: maxValue
       value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 148413236740330115, guid: 88e1f51d5c3769644aca7889b9d2edc1,
-        type: 3}
-      propertyPath: m_Name
-      value: HolesPicker
       objectReference: {fileID: 0}
     - target: {fileID: 216513672535846415, guid: 88e1f51d5c3769644aca7889b9d2edc1,
         type: 3}
@@ -2230,8 +2230,6 @@ MonoBehaviour:
   targetPresenterPrefab: {fileID: 4402761380505667526, guid: 66639c13bc53ff24dbba705dd24511a4,
     type: 3}
   gameBoard: {fileID: 85567721}
-  holeWidth: 1
-  holeHeight: 1
   maxRows: 3
   maxCols: 5
 --- !u!1 &1701898362
@@ -2363,6 +2361,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1788251381}
   - component: {fileID: 1788251380}
+  - component: {fileID: 1788251383}
+  - component: {fileID: 1788251382}
   m_Layer: 0
   m_Name: RoundsGenerator
   m_TagString: Untagged
@@ -2379,11 +2379,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1788251379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd923f0158caaa74087287d6a6d4829a, type: 3}
+  m_Script: {fileID: 11500000, guid: f9f166026a764cf48bce0a3647e34a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   roundDuration: 3
-  minimumSlotsFactor: 0.2
   targetTypeCollection: {fileID: 11400000, guid: 0032367d95f44e44ebd795bb24919e88,
     type: 2}
 --- !u!4 &1788251381
@@ -2400,6 +2399,31 @@ Transform:
   m_Father: {fileID: 1631227310}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1788251382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788251379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2f42c6b6fe89f47a34213373d4354b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1788251383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788251379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8d186d5e83e924fbce0d8da1467df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roundDuration: 3
 --- !u!1 &1852175490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,6 +2635,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1701898366}
     m_Modifications:
+    - target: {fileID: 148413236740330115, guid: 88e1f51d5c3769644aca7889b9d2edc1,
+        type: 3}
+      propertyPath: m_Name
+      value: TimePicker
+      objectReference: {fileID: 0}
     - target: {fileID: 4476984042495885671, guid: 88e1f51d5c3769644aca7889b9d2edc1,
         type: 3}
       propertyPath: interval
@@ -2630,11 +2659,6 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultValue
       value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 148413236740330115, guid: 88e1f51d5c3769644aca7889b9d2edc1,
-        type: 3}
-      propertyPath: m_Name
-      value: TimePicker
       objectReference: {fileID: 0}
     - target: {fileID: 216513672535846415, guid: 88e1f51d5c3769644aca7889b9d2edc1,
         type: 3}

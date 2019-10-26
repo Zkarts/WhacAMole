@@ -24,7 +24,7 @@ public class RoundsController : MonoBehaviour {
         this.targetTypeCollection = targetTypeCollection;
         this.roundDefinitions = roundDefinitions;
 
-        targetController.Init(playModel);
+        targetController.Init(playModel, targetTypeCollection);
 
         roundCounter = 0;
         ExecuteRound();

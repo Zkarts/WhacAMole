@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b648050177beeb0438a0f38ec846bf52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 100
+  weight: 50
   pointValue: -10
   activeDuration: 2
 --- !u!114 &2134573859599569158
@@ -60,10 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55a99d832db0ca4b880ea531a815a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shownYPos: 0
-  hiddenYPos: -0.7
-  showDuration: 0.5
-  hideDuration: 0.5
+  moveDistance: 1
+  showMoveTime: 0.3
+  hideMoveTime: 0.3
 --- !u!1 &2134573859619070381
 GameObject:
   m_ObjectHideFlags: 0

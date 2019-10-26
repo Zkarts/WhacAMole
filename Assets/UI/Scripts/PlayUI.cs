@@ -23,6 +23,7 @@ public class PlayUI : MonoBehaviour {
 
     public void Activate(float gameTime) {
         gameObject.SetActive(true);
+        scoreDisplay.SetValue(0);
         gameTimerUI.StartTimer(gameTime);
     }
 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class WhackTarget : MonoBehaviour {
 
-    public event Action OnDeactivated;
-
     //weight between all whackTargets to decide if this option gets chosen
     [SerializeField]
     private float weight;
@@ -23,6 +21,7 @@ public class WhackTarget : MonoBehaviour {
     private PlayModel playModel;
     private bool isActive;
 
+    public float Weight => weight;
     public int PointValue => pointValue;
     public float ActiveDuration => activeDuration;
 
