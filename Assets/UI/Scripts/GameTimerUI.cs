@@ -16,25 +16,8 @@ public class GameTimerUI : MonoBehaviour {
     }
 
     public void StartTimer(float duration) {
-        timerCoroutine = StartCoroutine(TimerRoutine(duration));
-    }
-
-    private IEnumerator TimerRoutine(float duration) {
-        float timeExpired = 0;
-        int displayDuration = (int)duration;
-        intDisplay.SetValue(displayDuration);
-
-        while (timeExpired < duration) {
-            timeExpired += Time.deltaTime;
-
-            if (timeExpired > 1.0f) {
-                displayDuration--;
-                timeExpired -= 1.0f;
-                intDisplay.SetValue(displayDuration);
-            }
-
-            yield return null;
-        }
+        intDisplay.SetValue((int)duration);
+        timer.StartTimer(duration, null, (s) => intDisplay.SetValue((int)duration - s));
     }
 
 }

@@ -11,7 +11,6 @@ public class PlatformLoader : MonoBehaviour {
     private SelectionManager standaloneSelectionManagerPrefab, mobileSelectionManagerPrefab;
 
     private void Awake() {
-
         SelectionManager selectionManager;
 
 #if UNITY_EDITOR || UNITY_STANDALONE
