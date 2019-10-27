@@ -32,8 +32,6 @@ public class GameModesController : MonoBehaviour {
 
         platformLoader.Load();
         platformLoader.SelectionManager.IsBlocked = true;
-
-        Time.timeScale = 5;
     }
 
     public void StartGame(int gameDurationInSeconds, int slotCount) {
