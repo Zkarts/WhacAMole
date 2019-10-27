@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface ISelectionService {
 
-    bool DetectSelection();
+    void Refresh();
+    bool DetectSelection(out int id);
 
 }

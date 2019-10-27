@@ -10,7 +10,7 @@ public class MouseCameraRayProvider : MonoBehaviour, ICameraRayProvider {
         gameCamera = cam;
     }
 
-    public Ray GetRay() {
+    public Ray GetRay(int id = 0) {
         return gameCamera.ScreenPointToRay(Input.mousePosition);
     }
 }

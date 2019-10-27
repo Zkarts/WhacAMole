@@ -5,6 +5,6 @@ using UnityEngine;
 public interface ICameraRayProvider {
 
     void SetCamera(Camera cam);
-    Ray GetRay();
+    Ray GetRay(int id);
 
 }

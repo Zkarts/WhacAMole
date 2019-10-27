@@ -9,10 +9,6 @@ public class PlayUI : MonoBehaviour {
     [SerializeField]
     private IntDisplay scoreDisplay;
 
-    private void Start() {
-        Deactivate();
-    }
-
     public void Subscribe(PlayModel playModel) {
         playModel.OnScoreChange += scoreDisplay.SetValue;
     }

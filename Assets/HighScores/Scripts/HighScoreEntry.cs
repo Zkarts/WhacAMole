@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct HighScoreEntry {
+public class HighScoreEntry {
 
     public string Name { get; }
     public int Points { get; }

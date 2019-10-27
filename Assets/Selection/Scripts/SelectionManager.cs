@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour {
 
+    public bool IsBlocked = false;
+
     private ISelectionService selectionService;
     private ICameraRayProvider cameraRayProvider;
 
@@ -22,12 +24,14 @@ public class SelectionManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (selectionService == null || cameraRayProvider == null) {
+        if (IsBlocked || selectionService == null || cameraRayProvider == null) {
             return;
         }
 
-        if (selectionService.DetectSelection()) {
-            Ray ray = cameraRayProvider.GetRay();
+        selectionService.Refresh();
+        int id = -1;
+        while (selectionService.DetectSelection(out id)) {
+            Ray ray = cameraRayProvider.GetRay(id);
 
             Physics.Raycast(ray, out RaycastHit hitInfo, float.MaxValue);
 

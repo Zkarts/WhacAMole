@@ -5,6 +5,6 @@ using UnityEngine;
 
 public interface IHighscoreSaveService {
 
-    void Save(List<HighScoreContainer> saveData);
+    void Save(HighScoreContainer saveData);
 
 }

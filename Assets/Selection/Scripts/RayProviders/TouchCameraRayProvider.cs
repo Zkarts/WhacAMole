@@ -10,11 +10,11 @@ public class TouchCameraRayProvider : MonoBehaviour, ICameraRayProvider {
         gameCamera = cam;
     }
 
-    public Ray GetRay() {
-        if (Input.touchCount == 0) {
-            Debug.LogError("No touches found for TouchRayProvider");
+    public Ray GetRay(int id = 0) {
+        if (Input.touchCount <= id) {
+            Debug.LogError($"Touch ID {id} not found for TouchRayProvider");
             return new Ray(Vector3.zero, Vector3.zero);
         }
-        return gameCamera.ViewportPointToRay(Input.GetTouch(0).position);
+        return gameCamera.ScreenPointToRay(Input.GetTouch(id).position);
     }
 }

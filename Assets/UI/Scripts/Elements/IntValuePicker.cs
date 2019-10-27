@@ -1,8 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class IntValuePicker : MonoBehaviour {
+
+    public event Action OnValueChanged;
 
     [SerializeField]
     private int defaultValue, minValue, maxValue;
@@ -23,6 +26,7 @@ public class IntValuePicker : MonoBehaviour {
         set {
             this.value = value;
             display.SetValue(value);
+            OnValueChanged?.Invoke();
         }
     }
 
@@ -45,22 +49,24 @@ public class IntValuePicker : MonoBehaviour {
     }
 
     private void Add() {
-        value += interval;
-        if (value >= maxValue) {
-            value = maxValue;
+        int newValue = value + interval;
+        if (newValue >= maxValue) {
+            newValue = maxValue;
             addButton.interactable = false;
         }
-        display.SetValue(value);
+
+        Value = newValue;
         subtractButton.interactable = true;
     }
 
     private void Subtract() {
-        value -= interval;
-        if (value <= minValue) {
-            value = minValue;
+        int newValue = value - interval;
+        if (newValue <= minValue) {
+            newValue = minValue;
             subtractButton.interactable = false;
         }
-        display.SetValue(value);
+
+        Value = newValue;
         addButton.interactable = true;
     }
 }

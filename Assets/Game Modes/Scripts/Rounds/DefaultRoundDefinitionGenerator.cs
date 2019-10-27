@@ -9,6 +9,7 @@ public class DefaultRoundDefinitionGenerator : MonoBehaviour, IRoundDefinitionGe
     private float roundDuration;
     private float weightSum;
     private TargetTypeCollection targetTypeCollection;
+    private Random.State timeBasedRandomState;
 
     private void Awake() {
         slotDefinitionGenerator = GetComponent<ISlotDefinitionGenerator>();
@@ -22,6 +23,8 @@ public class DefaultRoundDefinitionGenerator : MonoBehaviour, IRoundDefinitionGe
         foreach (WhackTarget targetType in targetTypeCollection.targetTypes) {
             weightSum += targetType.Weight;
         }
+        Random.InitState(System.DateTime.Now.Millisecond);
+        timeBasedRandomState = Random.state;
     }
 
     public RoundDefinition GenerateRound(int roundNumber, int numberOfAvailableSlots) {
@@ -31,21 +34,21 @@ public class DefaultRoundDefinitionGenerator : MonoBehaviour, IRoundDefinitionGe
 
         result.orderedSlotDefinitions = new List<RoundDefinition.SlotDefinition>(numberOfAvailableSlots);
 
-        int slotsToUse = Random.Range(1, numberOfAvailableSlots);
+        int numberOfSlotsToUse = Random.Range(1, numberOfAvailableSlots + 1);
 
         int[] indices = new int[numberOfAvailableSlots];
         for (int i = 0; i < numberOfAvailableSlots; i++) {
             indices[i] = i;
         }
 
-        SelectIndicesToUse(ref indices, slotsToUse, numberOfAvailableSlots);
+        SelectIndicesToUse(ref indices, numberOfSlotsToUse, numberOfAvailableSlots);
 
         for (int k = 0; k < numberOfAvailableSlots; k++) {
             bool useSlot = false;
 
             for (int l = 0; l < numberOfAvailableSlots; l++) {
                 if (indices[l] == k) {
-                    useSlot = l < slotsToUse;
+                    useSlot = l < numberOfSlotsToUse;
                     break;
                 }
             }
@@ -64,8 +67,8 @@ public class DefaultRoundDefinitionGenerator : MonoBehaviour, IRoundDefinitionGe
 
     private void SelectIndicesToUse(ref int[] indices, int slotsToUse, int availableSlots) {
         Random.State generationState = Random.state;
-        //use actual random for which slots to use this game
-        Random.InitState(System.DateTime.Now.Millisecond);
+        //use time based random state for which slots to use this game
+        Random.state = timeBasedRandomState;
 
         //Fisher-Yates shuffle; sets the first _slotsToUse_ indices to the picks efficiently
         for (int i = 0; i < slotsToUse; i++) {
@@ -76,6 +79,7 @@ public class DefaultRoundDefinitionGenerator : MonoBehaviour, IRoundDefinitionGe
             indices[i] = swap;
         }
 
+        timeBasedRandomState = Random.state;
         Random.state = generationState;
     }
 

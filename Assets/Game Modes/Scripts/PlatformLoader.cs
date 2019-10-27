@@ -10,12 +10,19 @@ public class PlatformLoader : MonoBehaviour {
     [SerializeField]
     private SelectionManager standaloneSelectionManagerPrefab, mobileSelectionManagerPrefab;
 
-    private void Awake() {
-        SelectionManager selectionManager;
+    private SelectionManager selectionManager;
+
+    public SelectionManager SelectionManager {
+        get { return selectionManager; }
+    }
+
+    public void Load() {
 
 #if UNITY_EDITOR || UNITY_STANDALONE
+        Debug.Log("Standalone platform");
         selectionManager = GameObject.Instantiate<SelectionManager>(standaloneSelectionManagerPrefab);
 #elif UNITY_ANDROID || UNITY_IOS
+        Debug.Log("Mobile platform");
         selectionManager = GameObject.Instantiate<SelectionManager>(mobileSelectionManagerPrefab);
 #endif
 

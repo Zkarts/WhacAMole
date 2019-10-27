@@ -1,8 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameModesController : MonoBehaviour {
+
+    public event Action<PlayModel, int> OnGameStart;
+    public event Action<PlayModel, GameModeSetting> OnGameEnd;
+
+    [SerializeField]
+    private PlatformLoader platformLoader;
 
     [SerializeField]
     private RoundsGenerator roundsGenerator;
@@ -14,38 +21,41 @@ public class GameModesController : MonoBehaviour {
     private RoundsController roundsController;
 
     [SerializeField]
-    private MenuUI menuUI;
-
-    [SerializeField]
-    private PlayUI playUI;
+    private UIController uiController;
 
     private PlayModel playModel;
+    private GameModeSetting currentGameModeSetting;
 
     public void Start() {
-        menuUI.OnPlay += StartGame;
-        menuUI.Activate();
+        uiController.Init(this);
+        uiController.OnPlay += StartGame;
+
+        platformLoader.Load();
+        platformLoader.SelectionManager.IsBlocked = true;
+
+        Time.timeScale = 5;
     }
 
     public void StartGame(int gameDurationInSeconds, int slotCount) {
         playModel = new PlayModel();
-        playUI.Subscribe(playModel);
-        playUI.Activate(gameDurationInSeconds);
+
+        currentGameModeSetting = new GameModeSetting(gameDurationInSeconds, slotCount);
 
         targetGenerator.GenerateTargets(slotCount);
         List<RoundDefinition> roundDefinitions = roundsGenerator.GenerateRounds(gameDurationInSeconds, slotCount);
         roundsController.StartRounds(roundsGenerator.TargetTypeCollection, roundDefinitions, playModel);
 
         roundsController.OnRoundsFinished += EndGame;
+        platformLoader.SelectionManager.IsBlocked = false;
 
-        menuUI.Deactivate();
+        OnGameStart?.Invoke(playModel, gameDurationInSeconds);
     }
 
-    //TODO
     private void EndGame() {
-        playUI.Unsubscribe(playModel);
-        playUI.Deactivate();
+        roundsController.OnRoundsFinished -= EndGame;
+        platformLoader.SelectionManager.IsBlocked = true;
 
-        menuUI.Activate();
+        OnGameEnd?.Invoke(playModel, currentGameModeSetting);
     }
 
 }

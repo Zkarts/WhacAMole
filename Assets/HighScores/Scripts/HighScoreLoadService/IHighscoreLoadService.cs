@@ -5,6 +5,6 @@ using UnityEngine;
 
 public interface IHighscoreLoadService {
 
-    List<HighScoreContainer> Load();
+    HighScoreContainer Load();
 
 }
