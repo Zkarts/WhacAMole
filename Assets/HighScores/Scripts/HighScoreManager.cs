@@ -19,13 +19,16 @@ public class HighScoreManager : MonoBehaviour {
     private void Awake() {
         saveService = GetComponent<IHighscoreSaveService>();
         loadService = GetComponent<IHighscoreLoadService>();
-        highScoreContainer = new HighScoreContainer(this);
-        //TODO:
-        //highScoreContainer = loadService.Load();
+        highScoreContainer = loadService.Load();
     }
 
     public List<HighScoreEntry> TryGetEntries(GameModeSetting setting) {
         return highScoreContainer.TryGetEntries(setting);
+    }
+
+    public void AddEntry(GameModeSetting setting, HighScoreEntry newEntry) {
+        highScoreContainer.AddHighScore(setting, newEntry, entriesSavedPerSetting);
+        saveService.Save(highScoreContainer);
     }
 
     private void OnDestroy() {

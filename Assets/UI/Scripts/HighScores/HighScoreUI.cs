@@ -44,7 +44,8 @@ public class HighScoreUI : MonoBehaviour {
             else {
                 HighScoreEntry lastEntry = entries[entries.Count - 1];
 
-                if (lastEntry.Points < newScore) {
+                //equal scores can be added after the existing entry
+                if (lastEntry.Points < newScore || entries.Count < highScoreManager.EntriesSavedPerSetting) {
                     addNewEntry = true;
                 }
             }
@@ -62,9 +63,11 @@ public class HighScoreUI : MonoBehaviour {
     }
 
     private void AddNewHighScore(HighScoreEntry newEntry) {
-        List<HighScoreEntry> entries = highScoreManager.TryGetEntries(currentSetting);
+        highScoreManager.AddEntry(currentSetting, newEntry);
 
         highScoreNewUI.Deactivate();
+
+        List<HighScoreEntry> entries = highScoreManager.TryGetEntries(currentSetting);
         highScoreListUI.Activate(entries, currentSetting);
     }
 

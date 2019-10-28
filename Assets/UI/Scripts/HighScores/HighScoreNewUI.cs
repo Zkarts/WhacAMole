@@ -9,8 +9,12 @@ public class HighScoreNewUI : MonoBehaviour {
 
     public event Action<HighScoreEntry> OnNewHighScore;
 
+    [Tooltip("The maximum amount of characters for a player's name. 3 creates the typical arcade feeling")]
     [SerializeField]
     private int characterLimit = 3;
+
+    [SerializeField]
+    private bool playerNameAllCaps = true;
 
     [SerializeField]
     private Button okButton;
@@ -26,7 +30,12 @@ public class HighScoreNewUI : MonoBehaviour {
 
     public void Init() {
         okButton.onClick.AddListener(SubmitHighScore);
+
         nameField.characterLimit = characterLimit;
+        if (playerNameAllCaps) {
+            //this only sets the font style, the resulting text may still be lower case
+            nameField.textComponent.fontStyle |= FontStyles.UpperCase;
+        }
     }
 
     public void Activate(GameModeSetting setting, int newScore) {
@@ -41,7 +50,11 @@ public class HighScoreNewUI : MonoBehaviour {
     }
 
     private void SubmitHighScore() {
-        OnNewHighScore?.Invoke(new HighScoreEntry(nameField.text, scoreDisplay.Value));
+        string name = nameField.text;
+        if (playerNameAllCaps) {
+            name = name.ToUpper();
+        }
+        OnNewHighScore?.Invoke(new HighScoreEntry(name, scoreDisplay.Value));
     }
 
 }

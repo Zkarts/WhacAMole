@@ -2,30 +2,25 @@
 using System.Collections;
 using UnityEngine;
 
-public class WhackTarget : MonoBehaviour {
+public abstract class WhackTarget : MonoBehaviour {
 
     //weight between all whackTargets to decide if this option gets chosen
     [SerializeField]
-    private float weight;
+    protected float weight;
 
     [SerializeField]
-    private int pointValue;
-
-    [SerializeField]
-    private float activeDuration;
+    protected float activeDuration;
 
     protected TargetMoveBehaviour targetMoveBehaviour;
-
     protected TargetPresenter presenter;
 
-    private PlayModel playModel;
-    private bool isActive;
+    protected PlayModel playModel;
+    protected bool isActive;
 
     public float Weight => weight;
-    public int PointValue => pointValue;
     public float ActiveDuration => activeDuration;
 
-    public void Init(TargetPresenter presenter, PlayModel playModel) {
+    public virtual void Init(TargetPresenter presenter, PlayModel playModel) {
         this.presenter = presenter;
         this.playModel = playModel;
 
@@ -38,7 +33,7 @@ public class WhackTarget : MonoBehaviour {
         }
     }
 
-    public void Activate() {
+    public virtual void Activate() {
         isActive = true;
 
         if (targetMoveBehaviour != null) {
@@ -46,21 +41,21 @@ public class WhackTarget : MonoBehaviour {
         }
     }
 
-    public void Deactivate() {
+    public virtual void Deactivate() {
         if (targetMoveBehaviour != null) {
             targetMoveBehaviour.Deactivate();
         }
     }
 
-    //can be overridden for varying hit behaviour
-    public virtual void GetHit() {
+    public void GetHit() {
         if (!isActive) {
             return;
         }
 
-        isActive = false;
-        presenter.HideTarget();
-        playModel.Score += pointValue;
+        HandleHit();
     }
+
+    //can be overridden for varying hit behaviour
+    protected abstract void HandleHit();
 
 }

@@ -24,7 +24,7 @@ public class HighScoreListUI : MonoBehaviour {
 
     public void Init(int listLength) {
         for (int i = 0; i < listLength; i++) {
-            HighScoreDisplayUI displayUI = GameObject.Instantiate<HighScoreDisplayUI>(highScoreDisplayUIPrefab);
+            HighScoreDisplayUI displayUI = GameObject.Instantiate<HighScoreDisplayUI>(highScoreDisplayUIPrefab, highScoreList);
             displayUIs.Add(displayUI);
         }
 
@@ -41,7 +41,7 @@ public class HighScoreListUI : MonoBehaviour {
             if (entries != null && entries.Count > i) {
                 entryToShow = entries[i];
             }
-            displayUIs[i].ShowHighScoreEntry(i.ToString(), entryToShow);
+            displayUIs[i].ShowHighScoreEntry((i + 1).ToString(), entryToShow);
         }
     }
 
