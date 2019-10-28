@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 [Serializable]
@@ -56,6 +58,46 @@ public class HighScoreContainer {
             entries = new List<HighScoreEntry>();
             entries.Add(newEntry);
             entryLists[setting] = entries;
+        }
+    }
+
+    //Custom (de)serialisation methods for the dictionary
+    public void Write(BinaryWriter writer) {
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        //write size
+        writer.Write(entryLists.Count);
+
+        //write key value pairs
+        foreach (KeyValuePair<GameModeSetting, List<HighScoreEntry>> pair in entryLists) {
+            formatter.Serialize(writer.BaseStream, pair.Key);
+
+            writer.Write(pair.Value.Count);
+            foreach (HighScoreEntry entry in pair.Value) {
+                formatter.Serialize(writer.BaseStream, entry);
+            }
+        }
+    }
+
+    public void Read(BinaryReader reader) {
+        entryLists.Clear();
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        //read size
+        int dictionarySize = reader.ReadInt32();
+
+        //read key value pairs
+        for (int i = 0; i < dictionarySize; i++) {
+            GameModeSetting key = (GameModeSetting)formatter.Deserialize(reader.BaseStream);
+
+            int listSize = reader.ReadInt32();
+            List<HighScoreEntry> value = new List<HighScoreEntry>();
+            for (int j = 0; j < listSize; j++) {
+                value.Add((HighScoreEntry)formatter.Deserialize(reader.BaseStream));
+            }
+
+            entryLists[key] = value;
         }
     }
 
